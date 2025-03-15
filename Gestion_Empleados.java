@@ -103,5 +103,144 @@ public class Gestion_Empleados {
             System.out.println(array.get(i));
         }
     }
+    public static void Generar_Reporte(){
+        if(array.isEmpty()){
+            System.out.println("ERROR - No hay empleados registrados, intenta de nuevo");
+            return;
+        }else{
+            System.out.println();
+            System.out.println("-------------------------------------------------");
+            System.out.println("                  REPORTE GENERAL                ");
+            System.out.println("Total de empleados registrados-----> "+Empleado.contador);
 
+            //calcular salario promedio, salario maximo, minimo y empleados con salario mayor al promedio
+            double salario = 0;
+            for(int i = 0; i<array.size(); i++){
+                salario += array.get(i).getSalario();
+            }
+            salario = salario/ array.size();
+
+            System.out.println("Promedio general de salario -> "+salario);
+
+            //Calculando el salario maximo
+            double salarioMax = Double.NEGATIVE_INFINITY;
+
+            for(Empleado emple : array){
+                if(emple.getSalario()>salarioMax){
+                    salarioMax = emple.getSalario();
+                }
+            }
+            System.out.println("El salario maximo es de: --> "+salarioMax);
+
+            //Calculando el salario minimo
+            double salarioMin = Double.MAX_VALUE;
+            for(Empleado emple: array){
+                if(emple.getSalario()<salarioMin){
+                    salarioMin = emple.getSalario();
+                }
+            }
+            System.out.println("El salario minimo es de: --> "+salarioMin);
+
+            //Numero de empleados con el salario mayor al promedio
+            int cuenta = 0;
+
+            for(Empleado emple: array){
+                if(emple.getSalario()>salario){
+                    cuenta++;
+                }
+            }
+
+            System.out.println(cuenta+" empleados tienen salario mayor al promedio");
+
+            //Promedio de edad
+            double age = 0;
+            for(int i = 0; i<array.size(); i++){
+                age += array.get(i).getEdad();
+            }
+            age = age / array.size();
+            System.out.println("Promedio de edad de empleados --> "+age);
+            System.out.println("-------------- Distribucion de edades -------------");
+
+            //calcular jovenes
+            int cuentajovenes = 0;
+
+            for(Empleado emple: array){
+                if(emple.getEdad() <= 28){
+                    cuentajovenes += 1;
+                }
+            }
+            System.out.println("El numero de jovenes hasta 28 años es de: "+ cuentajovenes);
+
+            //Calcular adultos
+            int cuentaAdultos = 0;
+
+            for(Empleado emple: array){
+                if(emple.getEdad() <= 50 && emple.getEdad()>=29){
+                    cuentaAdultos += 1;
+                }
+            }
+            System.out.println("El numero de empleados entre 30 y 50 años es de: "+cuentaAdultos);
+
+            //calcular ancianos
+            int cuentaAncianos = 0;
+            for(Empleado emple: array){
+                if(emple.getEdad() > 50){
+                    cuentaAncianos += 1;
+                }
+            }
+            System.out.println("El numero de empleados mayor a 50 años es de: "+cuentaAncianos);
+        }
+    }
+
+    public static void Menu(){
+        boolean isEncendido = true;
+
+        while(isEncendido){
+
+            System.out.println("\n------------------------------------------------");
+            System.out.println("----- Bienvenido a la gestión de empleados -----");
+            System.out.println("------------------------------------------------");
+            System.out.println("Que quieres hacer?. ");
+            System.out.println("1. Agregar empleado");
+            System.out.println("2. Eliminar empleado");
+            System.out.println("3. Editar salario de empleado");
+            System.out.println("4. Listar empleados ");
+            System.out.println("5. Ver contador de empleados");
+            System.out.println("6. Generar reporte general");
+            System.out.println("7. Salir");
+
+            String opcion = input.nextLine();
+
+            switch (opcion){
+                case "1":
+                    Agregar_Empleado();
+                    break;
+                case "2":
+                    Eliminar_Empleado();
+                    break;
+                case "3":
+                    Editar_Salario();
+                    break;
+                case "4":
+                    Listar_Personal();
+                    break;
+                case "5":
+                    System.out.println();
+                    System.out.println("El contador de empleados es de: "+ Empleado.contador);
+                    System.out.println();
+                    break;
+                case "6":
+                    Generar_Reporte();
+                    break;
+                case "7":
+                    System.out.println("Gracias por usar el software, adios! ");
+                    isEncendido = false;
+                    break;
+                default:
+                    System.out.println("Ingresaste una opcion no valida intenta nuevamente");
+                    break;
+            }
+        }
+
+    }
 }
